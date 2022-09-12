@@ -13,13 +13,15 @@ const MODE_EASY = 0;
 const MODE_NORMAL = 1;
 const MODE_HARD = 2;
 const MODE_EXTRA = 3;
+const MODE_HADES = 4;
 
 // 各モードの表示用文字列
 const MODE_NAME = [
     "EASY",
     "NORMAL",
     "HARD",
-    "EXTRA"
+    "EXTRA",
+    "HADES"
 ];
 
 // 表示項目の項目名
@@ -32,5 +34,31 @@ const DISP_COL_CURRENTMODE = "CurrentMode";
 const DISP_COL_HIGHSCORE = "HighScore";
 const DISP_COL_HIGHSCORE_UNIT = "Times";
 
+// パズルの広さの定義
+const PUZZLE_SIZE = [
+    [3, 3],
+    [3, 3],
+    [3, 4],
+    [3, 4],
+    [4, 4]
+];
+
+// パズルの行列のインデックス
+const IDX_ROW = 0;
+const IDX_COL = 1;
+
+// パズルの反転モード
+const REV_MODE_CROSS = 0;
+const REV_MODE_ALL = 1;
+const REV_MODE_DIAGONAL = 2;
+
+// パズルの状態数を表す定数
+const PUZZLE_STATE_NUM = [
+    2,
+    2,
+    2,
+    2,
+    3
+];
 
 /* ゲームシーン共通変数 END */
