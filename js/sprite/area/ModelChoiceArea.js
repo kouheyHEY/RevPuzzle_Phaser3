@@ -1,0 +1,8 @@
+class MoveChoiiceArea {
+    constructor() {
+    }
+
+    changeMode() {
+
+    }
+}

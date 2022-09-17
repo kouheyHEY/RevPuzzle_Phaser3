@@ -13,27 +13,27 @@ class InfoArea {
         this.endTime = 0;
     }
 
-    startGame() {
-        // 開始時間を取得する
-        this.startTime = new Date().getTime();
+    dispColumnAll() {
+
     }
 
-    endGame() {
-        // 終了時間を取得する
-        this.endTime = new Date().getTime();
+    dispColumnOf() {
+
     }
 
-    setPlayer(_player) {
-        this.player = _player;
+    startTimer() {
+
     }
 
-    setPlayTime() {
-        this.playTime = (new Date().getTime()) - this.startTime;
-        this.playTime = this.playTime / 1000;
+    finishTimer() {
+
     }
 
-    setMode(_mode) {
-        this.mode = mode;
+    stopTimer() {
+
     }
 
+    dispHighScore() {
+
+    }
 }
