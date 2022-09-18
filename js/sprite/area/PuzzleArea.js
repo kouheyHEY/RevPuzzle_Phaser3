@@ -24,7 +24,7 @@ class PuzzleArea {
     }
 
     /**
-     * パズルを正解用のパズルを含めて初期化する
+     * 初期配列を生成する
      */
     initPuzzle() {
         // 各配列を初期化する
@@ -37,8 +37,9 @@ class PuzzleArea {
             this.puzzleDefault.push([]);
 
             for (var j = 0; j < this.puzzleSize[IDX_COL]; j++) {
-                // 初期配列の値を代入する
-                this.puzzleUnit[i].push(this.puzzleDefault[i][j]);
+                // 初期配列を生成する
+                this.puzzleUnit[i].push(PUZZLE_STATE_1);
+                this.puzzleDefault[i].push(PUZZLE_STATE_1);
             }
         }
 

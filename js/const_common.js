@@ -61,4 +61,8 @@ const PUZZLE_STATE_NUM = [
     3
 ];
 
+// パズルの状態
+const PUZZLE_STATE_0 = 0;
+const PUZZLE_STATE_1 = 1;
+
 /* ゲームシーン共通変数 END */
