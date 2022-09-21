@@ -4,6 +4,7 @@ class PuzzleArea {
         this.puzzleDefault = [];
         this.puzzleUnit = [];
         this.reverseMode = REV_MODE_CROSS;
+        this.puzzleMode = MODE_EASY;
     }
 
     /**
@@ -50,7 +51,15 @@ class PuzzleArea {
      * @return 正解ならtrue, そうでないならfalse
      */
     checkPuzzleAnswer() {
-
+        for (unitRow of this.puzzleUnit) {
+            for (unit of unitRow) {
+                if (unit != PUZZLE_STATE_0) {
+                    // 一つでも一致しないなら, false
+                    return false
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -60,7 +69,22 @@ class PuzzleArea {
      * @param {Boolean} _revArround 周囲を反転させるか
      */
     reversePuzzleUnit(_row, _col, _revArround) {
-
+        for (var i = -1; i <= 1; i++) {
+            // パズルの範囲外を参照している場合
+            if (_row + i < 0 || _row + i >= this.puzzleSize[IDX_ROW]) {
+                continue;
+            }
+            for (var j = -1; j <= 1; j++) {
+                // パズルの範囲外を参照している場合
+                if (_col + j < 0 || _col + j >= this.puzzleSize[IDX_COL]) {
+                    continue;
+                }
+                // パズルを反転させる
+                this.puzzleUnit[i][j] =
+                    (this.puzzleUnit[i][j] + REV_POS_LIST[this.puzzleMode][i][j])
+                    % PUZZLE_STATE_NUM[this.puzzleMode];
+            }
+        }
     }
 
     /**
