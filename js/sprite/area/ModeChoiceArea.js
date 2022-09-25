@@ -1,4 +1,4 @@
-class MoveChoiiceArea {
+class ModeChoiceArea {
     constructor() {
     }
 

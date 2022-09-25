@@ -1,9 +1,8 @@
 
 /* 全シーン共通変数 START */
 // 画面サイズ
-// 16 * 42
-const D_WIDTH = 672;
-const D_HEIGHT = 672;
+const D_WIDTH = 720;
+const D_HEIGHT = 720;
 
 /* 全シーン共通変数 END */
 
@@ -88,5 +87,24 @@ const REV_POS_LIST = [
 // 0が正
 const PUZZLE_STATE_0 = 0;
 const PUZZLE_STATE_1 = 1;
+
+// 各エリアの描画色
+const COLOR_AREA_NORMAL = 0x80ff80;
+const COLOR_AREA_STROKE = 0x50cc50;
+const STROKE_WEIGHT = 8;
+
+// 各エリアの座標, 幅, 高さ
+const AREA_X_INFOAREA = 0;
+const AREA_Y_INFOAREA = 0;
+const AREA_W_INFOAREA = 480;
+const AREA_H_INFOAREA = 240;
+const AREA_X_MODECHOICEAREA = 481;
+const AREA_Y_MODECHOICEAREA = 0;
+const AREA_W_MODECHOICEAREA = 240;
+const AREA_H_MODECHOICEAREA = 240;
+const AREA_X_PUZZLEAREA = 0;
+const AREA_Y_PUZZLEAREA = 241;
+const AREA_W_PUZZLEAREA = 720;
+const AREA_H_PUZZLEAREA = 480;
 
 /* ゲームシーン変数 END */
