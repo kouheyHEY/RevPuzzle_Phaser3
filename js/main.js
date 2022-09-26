@@ -11,7 +11,7 @@ const config = {
     height: D_HEIGHT,
 
     // アンチエイリアス
-    antialias: false,
+    antialias: true,
 
     // シーン設定
     scene: [

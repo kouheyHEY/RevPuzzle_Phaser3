@@ -8,6 +8,9 @@ class GameScene extends Phaser.Scene {
         this.modeChoiceArea = new ModeChoiceArea();
         this.InfoArea = new InfoArea();
 
+        // 各パラメータ
+        this.gameMode = MODE_EASY;
+
     }
 
     /**
@@ -27,6 +30,22 @@ class GameScene extends Phaser.Scene {
         //     frameWidth: UNIT_SIZE,
         //     frameHeight: UNIT_SIZE
         // });
+    }
+
+    /**
+     * 文字列を画面上に追加しセットする
+     * @param {*} _text 追加する文字列
+     * @param {*} _x 文字列のx座標
+     * @param {*} _y 文字列のy座標
+     * @param {*} _fontSize 文字列のサイズ
+     * @param {*} _color 文字列の色
+     * @param {*} _isBold 太字かどうか
+     */
+    setText(_text, _x, _y, _fontSize, _color, _isBold) {
+        this.add.text(_x, _y, _text)
+            .setFontSize(_fontSize)
+            .setFill(_color)
+            .setFontFamily(_isBold ? "Bit12Bold" : "Bit12");
     }
 
     preload() {
@@ -72,6 +91,25 @@ class GameScene extends Phaser.Scene {
                 AREA_Y_PUZZLEAREA + STROKE_WEIGHT / 2,
                 AREA_W_PUZZLEAREA - STROKE_WEIGHT,
                 AREA_H_PUZZLEAREA - STROKE_WEIGHT);
+
+        this.setText(INFO_NAME_PLAYER, INFO_X, INFO_Y_PLAYER, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_PLAYTIME, INFO_X, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_REVERSE, INFO_X, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
+
+        let info_val_player = "playerxxx";
+        let info_val_playTime = "yyy" + " ms";
+        let info_val_reverse = "CROSS";
+        let info_val_mode = MODE_NAME[this.gameMode];
+        let info_val_highScore = "XXX" + " Times";
+
+        this.setText(info_val_player, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYER, INFO_H, INFO_COLOR, true);
+        this.setText(info_val_playTime, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
+        this.setText(info_val_reverse, INFO_X + INFO_W + INFO_SPAN, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
+        this.setText(info_val_mode, INFO_X + INFO_W + INFO_SPAN, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
+        this.setText(info_val_highScore, INFO_X + INFO_W + INFO_SPAN, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
+
     }
 
     update() {
