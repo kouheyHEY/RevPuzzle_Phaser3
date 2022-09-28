@@ -38,8 +38,8 @@ const MODE_NAME = [
 const PUZZLE_SIZE = [
     [3, 3],
     [3, 3],
-    [3, 4],
-    [3, 4],
+    [4, 3],
+    [4, 3],
     [4, 4]
 ];
 
@@ -90,7 +90,7 @@ const PUZZLE_STATE_1 = 1;
 
 // 各エリアの描画色
 const COLOR_AREA_NORMAL = 0x80ff80;
-const COLOR_AREA_STROKE = 0x50cc50;
+const COLOR_AREA_STROKE = 0x207020;
 const STROKE_WEIGHT = 8;
 
 // 各エリアの座標, 幅, 高さ
