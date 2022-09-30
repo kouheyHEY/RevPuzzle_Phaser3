@@ -3,6 +3,7 @@ class PuzzleArea {
         this.puzzleSize = [];
         this.puzzleDefault = [];
         this.puzzleUnit = [];
+        this.puzzleUnitSprite = [];
         this.reverseMode = REV_MODE_CROSS;
         this.puzzleMode = MODE_EASY;
     }

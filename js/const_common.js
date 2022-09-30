@@ -129,4 +129,29 @@ const INFO_NAME_HIGHSCORE = "HighScore";
 
 const INFO_COLOR = 0x002200;
 
+// パズルエリアの座標, 幅, 高さ
+const PUZZLE_OUTER_MARGIN = [
+    [148, 73],
+    [148, 73],
+    [82, 73],
+    [82, 73],
+    [130, 58]
+];
+
+const PUZZLE_INNER_MARGIN = [
+    [24, 24],
+    [24, 24],
+    [24, 20],
+    [24, 20],
+    [20, 20],
+];
+
+const PUZZLE_UNIT_SIZE = [
+    [120, 90],
+    [120, 90],
+    [120, 90],
+    [120, 90],
+    [96, 72],
+];
+
 /* ゲームシーン変数 END */
