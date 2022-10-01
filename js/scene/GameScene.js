@@ -108,6 +108,7 @@ class GameScene extends Phaser.Scene {
         this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
 
+        // デバッグ用（ゲーム中に値が変わるので仮置き中）
         let info_val_player = "playerxxx";
         let info_val_playTime = "yyy" + " ms";
         let info_val_reverse = "CROSS";
@@ -122,10 +123,23 @@ class GameScene extends Phaser.Scene {
 
         // パズルエリア
         // 3*3（難易度に応じて変更する）のパズルユニットのリストを作成する
-        this.puzzleArea.puzzleUnitSprite.push();
+        var pzlXOffset = AREA_X_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_X];
+        var pzlYOffset = AREA_Y_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_Y];
+        for(var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++){
+            var pzlUnitTmp = [];
+            for(var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++){
+                pzlUnitTmp[j] = this.physics.add.sprite(
+                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
+                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
+                    PUZZLE_UNIT_SIZE[this.gameMode][IDX_X],
+                    PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y],
+                    IMG_PZL_UNIT_OFF
+                );
+            }
+            this.puzzleArea.puzzleUnitSprite.push(pzlUnitTmp);
+        }
 
         /* 画面の初期表示 END */
-
 
     }
 

@@ -38,8 +38,8 @@ const MODE_NAME = [
 const PUZZLE_SIZE = [
     [3, 3],
     [3, 3],
-    [4, 3],
-    [4, 3],
+    [3, 4],
+    [3, 4],
     [4, 4]
 ];
 
@@ -55,6 +55,8 @@ const PUZZLE_STATE_NUM = [
 // パズルの行列のインデックス
 const IDX_ROW = 0;
 const IDX_COL = 1;
+const IDX_X = 0;
+const IDX_Y = 1;
 
 // パズルの反転モード
 const REV_MODE_CROSS = 0;
