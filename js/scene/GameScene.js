@@ -128,13 +128,11 @@ class GameScene extends Phaser.Scene {
         for(var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++){
             var pzlUnitTmp = [];
             for(var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++){
-                pzlUnitTmp[j] = this.physics.add.sprite(
-                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
-                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
-                    PUZZLE_UNIT_SIZE[this.gameMode][IDX_X],
-                    PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y],
+                pzlUnitTmp[j] = this.add.sprite(
+                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
+                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
                     IMG_PZL_UNIT_OFF
-                );
+                ).setScale(1).setDepth(1);
             }
             this.puzzleArea.puzzleUnitSprite.push(pzlUnitTmp);
         }
