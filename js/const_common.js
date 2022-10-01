@@ -92,6 +92,7 @@ const PUZZLE_STATE_1 = 1;
 
 // 各エリアの描画色
 const COLOR_AREA_NORMAL = 0x80ff80;
+const COLOR_AREA_PUZZLE = 0xafffaf;
 const COLOR_AREA_STROKE = 0x207020;
 const STROKE_WEIGHT = 8;
 

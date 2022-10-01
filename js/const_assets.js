@@ -14,3 +14,8 @@ const IMG_REV_CROSS = "PuzzleUnitCross";
 const IMG_REV_DIAG = "PuzzleUnitDiganal";
 const IMG_PZL_UNIT_OFF = "PuzzleUnitOff";
 const IMG_PZL_UNIT_ON = "PuzzleUnitOn";
+
+const PUZZLE_TEXTURE = [
+    IMG_PZL_UNIT_OFF,
+    IMG_PZL_UNIT_ON
+];

@@ -1,11 +1,11 @@
 class PuzzleArea {
     constructor() {
-        this.puzzleSize = [];
+        this.puzzleMode = MODE_EASY;
+        this.reverseMode = REV_MODE_CROSS;
+        this.puzzleSize = PUZZLE_SIZE[this.puzzleMode];
         this.puzzleDefault = [];
         this.puzzleUnit = [];
         this.puzzleUnitSprite = [];
-        this.reverseMode = REV_MODE_CROSS;
-        this.puzzleMode = MODE_EASY;
     }
 
     /**
@@ -40,8 +40,8 @@ class PuzzleArea {
 
             for (var j = 0; j < this.puzzleSize[IDX_COL]; j++) {
                 // 初期配列を生成する
-                this.puzzleUnit[i].push(PUZZLE_STATE_1);
-                this.puzzleDefault[i].push(PUZZLE_STATE_1);
+                this.puzzleUnit[i].push(0);
+                this.puzzleDefault[i].push(0);
             }
         }
 
@@ -54,7 +54,7 @@ class PuzzleArea {
     checkPuzzleAnswer() {
         for (unitRow of this.puzzleUnit) {
             for (unit of unitRow) {
-                if (unit != PUZZLE_STATE_0) {
+                if (unit != 1) {
                     // 一つでも一致しないなら, false
                     return false
                 }
@@ -70,20 +70,39 @@ class PuzzleArea {
      * @param {Boolean} _revArround 周囲を反転させるか
      */
     reversePuzzleUnit(_row, _col, _revArround) {
+        console.log(_row + ", " + _col);
+        // 指定のパズルを反転させる
+        this.puzzleUnit[_row][_col] =
+            (this.puzzleUnit[_row][_col] + 1) % PUZZLE_STATE_NUM[this.puzzleMode];
+
+        // 周囲を反転させない場合
+        if (!_revArround) {
+            // 終了する
+            return;
+        }
+
         for (var i = -1; i <= 1; i++) {
             // パズルの範囲外を参照している場合
             if (_row + i < 0 || _row + i >= this.puzzleSize[IDX_ROW]) {
+                // 次の処理に移る
                 continue;
             }
             for (var j = -1; j <= 1; j++) {
                 // パズルの範囲外を参照している場合
-                if (_col + j < 0 || _col + j >= this.puzzleSize[IDX_COL]) {
+                // または自身の位置を参照している場合
+                if (
+                    _col + j < 0 || _col + j >= this.puzzleSize[IDX_COL] ||
+                    (i == 0 && j == 0)
+                ) {
+                    // 次の処理に移る
                     continue;
                 }
+
                 // パズルを反転させる
-                this.puzzleUnit[i][j] =
-                    (this.puzzleUnit[i][j] + REV_POS_LIST[this.puzzleMode][i][j])
+                this.puzzleUnit[_row + i][_col + j] =
+                    (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][_row + i][_col + j])
                     % PUZZLE_STATE_NUM[this.puzzleMode];
+
             }
         }
     }

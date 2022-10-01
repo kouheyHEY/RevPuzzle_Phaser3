@@ -5,11 +5,15 @@ class GameScene extends Phaser.Scene {
 
         // 各エリアを管理するオブジェクト
         this.puzzleArea = new PuzzleArea();
+        this.puzzleArea.initPuzzle();
         this.modeChoiceArea = new ModeChoiceArea();
         this.InfoArea = new InfoArea();
 
         // 各パラメータ
         this.gameMode = MODE_EASY;
+
+        // 各フラグ
+        this.updatePuzzleFlg = false;
 
     }
 
@@ -89,7 +93,7 @@ class GameScene extends Phaser.Scene {
                 AREA_H_MODECHOICEAREA - STROKE_WEIGHT);
 
         // パズルエリア
-        g.fillStyle(COLOR_AREA_NORMAL, 1)
+        g.fillStyle(COLOR_AREA_PUZZLE, 1)
             .fillRect(
                 AREA_X_PUZZLEAREA,
                 AREA_Y_PUZZLEAREA,
@@ -125,16 +129,28 @@ class GameScene extends Phaser.Scene {
         // 3*3（難易度に応じて変更する）のパズルユニットのリストを作成する
         var pzlXOffset = AREA_X_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_X];
         var pzlYOffset = AREA_Y_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_Y];
-        for(var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++){
-            var pzlUnitTmp = [];
-            for(var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++){
-                pzlUnitTmp[j] = this.add.sprite(
-                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
-                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]),
+        for (var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++) {
+
+            this.puzzleArea.puzzleUnitSprite.push([]);
+
+            for (var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++) {
+
+                this.puzzleArea.puzzleUnitSprite[i][j] = this.add.sprite(
+                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2,
+                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2,
                     IMG_PZL_UNIT_OFF
-                ).setScale(1).setDepth(1);
+                ).setScale(1).setDepth(1).setInteractive();
+
+                this.puzzleArea.puzzleUnitSprite[i][j].on('pointerdown', function (pointer) {
+
+                    let row = Math.floor((pointer.y - pzlYOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]));
+                    let col = Math.floor((pointer.x - pzlXOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]));
+
+                    this.puzzleArea.reversePuzzleUnit(row, col, true);
+
+                    this.updatePuzzleFlg = true;
+                }, this);
             }
-            this.puzzleArea.puzzleUnitSprite.push(pzlUnitTmp);
         }
 
         /* 画面の初期表示 END */
@@ -142,6 +158,20 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
+        if (this.updatePuzzleFlg) {
+            this.updatePuzzleState();
+            this.updatePuzzleFlg = false;
+        }
+    }
 
+    updatePuzzleState() {
+        for (let i = 0; i < this.puzzleArea.puzzleSize[IDX_ROW]; i++) {
+            for (let j = 0; j < this.puzzleArea.puzzleSize[IDX_COL]; j++) {
+                this.puzzleArea.puzzleUnitSprite[i][j].setTexture(
+                    PUZZLE_TEXTURE[this.puzzleArea.puzzleUnit[i][j]]
+                );
+                console.log("yeah");
+            }
+        }
     }
 };
