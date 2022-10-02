@@ -1,11 +1,22 @@
 class InfoArea {
     constructor() {
-        // 各表示項目
-        this.player = "";
-        this.playTime = 0;
-        this.RevNum = 0;
-        this.mode = MODE_EASY;
-        this.highScore = 0;
+        // 各テキストオブジェクト
+        this.textObject = {
+            "Player": null,
+            "PlayTime": null,
+            "Reverse": null,
+            "CurrentMode": null,
+            "HighScore": null,
+        };
+
+        // 各表示文字列の後ろに付与する文字列
+        this.END_STR = {
+            "Player": "",
+            "PlayTime": INFO_VAL_PLAYTIME_END,
+            "Reverse": INFO_VAL_REVERSETIME_END,
+            "CurrentMode": "",
+            "HighScore": INFO_VAL_HIGHSCORE_END,
+        };
 
         // 開始時間
         this.startTime = 0;
@@ -17,8 +28,8 @@ class InfoArea {
 
     }
 
-    dispColumnOf() {
-
+    setValueOf(_column, _value) {
+        this.textObject[_column].setText(_value + this.END_STR[_column]);
     }
 
     startTimer() {

@@ -19,38 +19,26 @@ const DISP_COL_HIGHSCORE = "HighScore";
 const DISP_COL_HIGHSCORE_UNIT = "Times";
 
 // 各モードのID
-const MODE_EASY = 0;
-const MODE_NORMAL = 1;
-const MODE_HARD = 2;
-const MODE_EXTRA = 3;
-const MODE_HADES = 4;
+const MODE_NORMAL = 0;
+const MODE_HARD = 1;
+const MODE_EXTRA = 2;
 
 // 各モードの表示用文字列
 const MODE_NAME = [
-    "EASY",
     "NORMAL",
     "HARD",
-    "EXTRA",
-    "HADES"
+    "EXTRA"
 ];
 
 // パズルの広さの定義
 const PUZZLE_SIZE = [
     [3, 3],
-    [3, 3],
-    [3, 4],
     [3, 4],
     [4, 4]
 ];
 
 // パズルの状態数を表す定数
-const PUZZLE_STATE_NUM = [
-    2,
-    2,
-    2,
-    2,
-    3
-];
+const PUZZLE_STATE_NUM = 2
 
 // パズルの行列のインデックス
 const IDX_ROW = 0;
@@ -126,32 +114,30 @@ const INFO_Y_HIGHSCORE = INFO_Y_MODE + INFO_SPAN + INFO_H;
 
 const INFO_NAME_PLAYER = "Player";
 const INFO_NAME_PLAYTIME = "PlayTime";
-const INFO_NAME_REVERSE = "Reverse";
+const INFO_NAME_REVERSETIME = "Reverse";
 const INFO_NAME_MODE = "CurrentMode";
 const INFO_NAME_HIGHSCORE = "HighScore";
+
+const INFO_VAL_PLAYTIME_END = " ms";
+const INFO_VAL_REVERSETIME_END = " Times";
+const INFO_VAL_HIGHSCORE_END = " Times";
 
 const INFO_COLOR = 0x002200;
 
 // パズルエリアの座標, 幅, 高さ
 const PUZZLE_OUTER_MARGIN = [
     [148, 73],
-    [148, 73],
-    [82, 73],
     [82, 73],
     [130, 58]
 ];
 
 const PUZZLE_INNER_MARGIN = [
     [24, 24],
-    [24, 24],
-    [24, 20],
     [24, 20],
     [20, 20],
 ];
 
 const PUZZLE_UNIT_SIZE = [
-    [120, 90],
-    [120, 90],
     [120, 90],
     [120, 90],
     [96, 72],

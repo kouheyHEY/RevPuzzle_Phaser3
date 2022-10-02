@@ -1,6 +1,6 @@
 class PuzzleArea {
     constructor() {
-        this.puzzleMode = MODE_EASY;
+        this.puzzleMode = MODE_NORMAL;
         this.reverseMode = REV_MODE_CROSS;
         this.puzzleSize = PUZZLE_SIZE[this.puzzleMode];
         this.puzzleDefault = [];
@@ -72,8 +72,7 @@ class PuzzleArea {
     reversePuzzleUnit(_row, _col, _revArround) {
         console.log(_row + ", " + _col);
         // 指定のパズルを反転させる
-        this.puzzleUnit[_row][_col] =
-            (this.puzzleUnit[_row][_col] + 1) % PUZZLE_STATE_NUM[this.puzzleMode];
+        this.puzzleUnit[_row][_col] = (this.puzzleUnit[_row][_col] + 1) % 2;
 
         // 周囲を反転させない場合
         if (!_revArround) {
@@ -99,9 +98,7 @@ class PuzzleArea {
                 }
 
                 // パズルを反転させる
-                this.puzzleUnit[_row + i][_col + j] =
-                    (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][1 + i][1 + j])
-                    % PUZZLE_STATE_NUM[this.puzzleMode];
+                this.puzzleUnit[_row + i][_col + j] = (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][1 + i][1 + j]) % 2;
 
             }
         }
