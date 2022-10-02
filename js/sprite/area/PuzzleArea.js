@@ -52,8 +52,8 @@ class PuzzleArea {
      * @return 正解ならtrue, そうでないならfalse
      */
     checkPuzzleAnswer() {
-        for (unitRow of this.puzzleUnit) {
-            for (unit of unitRow) {
+        for (var unitRow of this.puzzleUnit) {
+            for (var unit of unitRow) {
                 if (unit != 1) {
                     // 一つでも一致しないなら, false
                     return false
@@ -100,7 +100,7 @@ class PuzzleArea {
 
                 // パズルを反転させる
                 this.puzzleUnit[_row + i][_col + j] =
-                    (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][_row + i][_col + j])
+                    (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][1 + i][1 + j])
                     % PUZZLE_STATE_NUM[this.puzzleMode];
 
             }

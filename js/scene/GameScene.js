@@ -14,6 +14,7 @@ class GameScene extends Phaser.Scene {
 
         // 各フラグ
         this.updatePuzzleFlg = false;
+        this.completePuzzleFlg = false;
 
     }
 
@@ -158,10 +159,20 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-        if (this.updatePuzzleFlg) {
+        // パズルがクリックされた時
+        if (!this.completePuzzleFlg && this.updatePuzzleFlg) {
+            // パズルの再描画を行う
             this.updatePuzzleState();
             this.updatePuzzleFlg = false;
         }
+
+        // パズルが完成したとき
+        if (this.completePuzzleFlg) {
+            // ゲームクリアの処理を行う
+            return;
+        }
+
+
     }
 
     updatePuzzleState() {
@@ -170,8 +181,10 @@ class GameScene extends Phaser.Scene {
                 this.puzzleArea.puzzleUnitSprite[i][j].setTexture(
                     PUZZLE_TEXTURE[this.puzzleArea.puzzleUnit[i][j]]
                 );
-                console.log("yeah");
             }
         }
+
+        this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
+
     }
 };
