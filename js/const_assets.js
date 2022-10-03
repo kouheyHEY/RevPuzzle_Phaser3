@@ -19,3 +19,9 @@ const PUZZLE_TEXTURE = [
     IMG_PZL_UNIT_OFF,
     IMG_PZL_UNIT_ON
 ];
+
+const REV_BUTTON_TEXTURE = [
+    IMG_REV_CROSS,
+    IMG_REV_ALL,
+    IMG_REV_DIAG
+];

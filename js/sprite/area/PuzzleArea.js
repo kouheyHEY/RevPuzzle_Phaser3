@@ -6,6 +6,8 @@ class PuzzleArea {
         this.puzzleDefault = [];
         this.puzzleUnit = [];
         this.puzzleUnitSprite = [];
+
+        this.revChangeModeButton = null;
     }
 
     /**
@@ -98,7 +100,7 @@ class PuzzleArea {
                 }
 
                 // パズルを反転させる
-                this.puzzleUnit[_row + i][_col + j] = (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.puzzleMode][1 + i][1 + j]) % 2;
+                this.puzzleUnit[_row + i][_col + j] = (this.puzzleUnit[_row + i][_col + j] + REV_POS_LIST[this.reverseMode][1 + i][1 + j]) % 2;
 
             }
         }
@@ -108,6 +110,7 @@ class PuzzleArea {
      * パズルの反転方法を変更する
      */
     changeRevMode() {
-
+        this.reverseMode = (this.reverseMode + 1) % REV_MODE_NUM;
+        this.revChangeModeButton.setTexture(REV_BUTTON_TEXTURE[this.reverseMode]);
     }
 }

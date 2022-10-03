@@ -47,6 +47,7 @@ const IDX_X = 0;
 const IDX_Y = 1;
 
 // パズルの反転モード
+const REV_MODE_NUM = 3;
 const REV_MODE_CROSS = 0;
 const REV_MODE_ALL = 1;
 const REV_MODE_DIAGONAL = 2;
@@ -126,21 +127,26 @@ const INFO_COLOR = 0x002200;
 
 // パズルエリアの座標, 幅, 高さ
 const PUZZLE_OUTER_MARGIN = [
-    [148, 73],
-    [82, 73],
-    [130, 58]
+    [88, 81],
+    [80, 108],
+    [80, 64]
 ];
 
 const PUZZLE_INNER_MARGIN = [
-    [24, 24],
-    [24, 20],
-    [20, 20],
+    [16, 16],
+    [16, 16],
+    [16, 16]
 ];
 
 const PUZZLE_UNIT_SIZE = [
     [120, 90],
-    [120, 90],
     [96, 72],
+    [96, 72]
 ];
 
+const PUZZLE_BUTTON_SCALE = [
+    1,
+    0.8,
+    0.8
+];
 /* ゲームシーン変数 END */

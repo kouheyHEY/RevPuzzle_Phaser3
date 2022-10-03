@@ -143,7 +143,7 @@ class GameScene extends Phaser.Scene {
                     pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2,
                     pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2,
                     IMG_PZL_UNIT_OFF
-                ).setScale(1).setDepth(1).setInteractive();
+                ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setDepth(1).setInteractive();
 
                 this.puzzleArea.puzzleUnitSprite[i][j].on('pointerdown', function (pointer) {
 
@@ -156,6 +156,25 @@ class GameScene extends Phaser.Scene {
                 }, this);
             }
         }
+
+        // 反転方法変更ボタンの表示
+        let chgRevBtnX = pzlXOffset +
+            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
+                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
+            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
+        let chgRevBtnY = pzlYOffset + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2;
+
+        this.puzzleArea.revChangeModeButton =
+            this.add.sprite(
+                chgRevBtnX,
+                chgRevBtnY,
+                REV_BUTTON_TEXTURE[REV_MODE_CROSS]
+            ).setInteractive();
+        this.puzzleArea.revChangeModeButton.on('pointerdown', function (pointer) {
+
+            this.puzzleArea.changeRevMode();
+
+        }, this);
 
         /* 画面の初期表示 END */
 
@@ -191,5 +210,11 @@ class GameScene extends Phaser.Scene {
         this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);
         this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
 
+    }
+
+    updateRevModeState(_revMode) {
+        for (let i = 0; i < REV_MODE_NUM; i++) {
+            this.puzzleArea.revChangeModeButton[i].setTexture();
+        }
     }
 };
