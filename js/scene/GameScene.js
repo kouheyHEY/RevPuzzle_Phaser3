@@ -16,6 +16,7 @@ class GameScene extends Phaser.Scene {
         // 各フラグ
         this.updatePuzzleFlg = false;
         this.completePuzzleFlg = false;
+        this.startFlg = false;
 
     }
 
@@ -104,22 +105,18 @@ class GameScene extends Phaser.Scene {
                 AREA_W_PUZZLEAREA - STROKE_WEIGHT,
                 AREA_H_PUZZLEAREA - STROKE_WEIGHT);
 
+        // デバッグ用（ゲーム中に値が変わるので仮置き中）
+        let info_val_playTime = "0.0" + INFO_VAL_PLAYTIME_END;
+        let info_val_reverse = 0 + INFO_VAL_REVERSETIME_END;
+        let info_val_mode = MODE_NAME[this.gameMode];
+        let info_val_highScore = "XXX" + INFO_VAL_HIGHSCORE_END;
+
         // 情報表示エリアの各文字列
-        this.setText(INFO_NAME_PLAYER, INFO_X, INFO_Y_PLAYER, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_PLAYTIME, INFO_X, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_REVERSETIME, INFO_X, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
 
-        // デバッグ用（ゲーム中に値が変わるので仮置き中）
-        let info_val_player = "playerxxx";
-        let info_val_playTime = "yyy" + INFO_VAL_PLAYTIME_END;
-        let info_val_reverse = 0 + INFO_VAL_REVERSETIME_END;
-        let info_val_mode = MODE_NAME[this.gameMode];
-        let info_val_highScore = "XXX" + INFO_VAL_HIGHSCORE_END;
-
-        this.InfoArea.textObject[INFO_NAME_PLAYER] =
-            this.setText(info_val_player, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYER, INFO_H, INFO_COLOR, true);
         this.InfoArea.textObject[INFO_NAME_PLAYTIME] =
             this.setText(info_val_playTime, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
         this.InfoArea.textObject[INFO_NAME_REVERSETIME] =
@@ -173,7 +170,6 @@ class GameScene extends Phaser.Scene {
         this.puzzleArea.revChangeModeButton.on('pointerdown', function (pointer) {
 
             this.puzzleArea.changeRevMode();
-
         }, this);
 
         /* 画面の初期表示 END */
@@ -181,19 +177,29 @@ class GameScene extends Phaser.Scene {
     }
 
     update() {
-        // パズルがクリックされた時
-        if (!this.completePuzzleFlg && this.updatePuzzleFlg) {
-            // パズルの再描画を行う
-            this.updatePuzzleState();
-            this.updatePuzzleFlg = false;
-        }
+        // ゲームクリアしていない場合
+        if (!this.completePuzzleFlg) {
+            if (this.updatePuzzleFlg) {
+                // ゲームが開始されたとき、タイマーを開始する
+                if (!this.startFlg) {
+                    this.startFlg = true;
 
-        // パズルが完成したとき
-        if (this.completePuzzleFlg) {
+                    // タイマーを開始する
+                    this.InfoArea.startTimer();
+                }
+                // パズルの再描画を行う
+                this.updatePuzzleState();
+                this.updatePuzzleFlg = false;
+            }
+            if (this.startFlg) {
+                // タイマーの更新
+                this.InfoArea.updateTimer();
+            }
+
+        } else {
             // ゲームクリアの処理を行う
             return;
         }
-
 
     }
 

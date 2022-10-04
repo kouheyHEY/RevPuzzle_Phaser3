@@ -8,16 +8,6 @@ const D_HEIGHT = 720;
 
 /* ゲームシーン変数 START */
 
-// 表示項目の項目名
-const DISP_COL_PLAYER = "Player";
-const DISP_COL_PLAYTIME = "PlayTime";
-const DISP_COL_PLAYTIME_UNIT = "sec";
-const DISP_COL_REVERSE = "Reverse";
-const DISP_COL_REVERSE_UNIT = "Times";
-const DISP_COL_CURRENTMODE = "CurrentMode";
-const DISP_COL_HIGHSCORE = "HighScore";
-const DISP_COL_HIGHSCORE_UNIT = "Times";
-
 // 各モードのID
 const MODE_NORMAL = 0;
 const MODE_HARD = 1;
@@ -102,24 +92,22 @@ const AREA_W_PUZZLEAREA = 720;
 const AREA_H_PUZZLEAREA = 480;
 
 // 各テキストの座標, 幅, 高さ
-const INFO_SPAN = 14;
+const INFO_SPAN = 18;
 const INFO_X = STROKE_WEIGHT + INFO_SPAN;
 const INFO_W = (AREA_W_INFOAREA - 3 * INFO_SPAN - 2 * STROKE_WEIGHT) / 2;
 
-const INFO_H = 28;
-const INFO_Y_PLAYER = STROKE_WEIGHT + INFO_SPAN;
-const INFO_Y_PLAYTIME = INFO_Y_PLAYER + INFO_SPAN + INFO_H;
+const INFO_H = 32;
+const INFO_Y_PLAYTIME = STROKE_WEIGHT + INFO_SPAN;
 const INFO_Y_REVERSE = INFO_Y_PLAYTIME + INFO_SPAN + INFO_H;
 const INFO_Y_MODE = INFO_Y_REVERSE + INFO_SPAN + INFO_H;
 const INFO_Y_HIGHSCORE = INFO_Y_MODE + INFO_SPAN + INFO_H;
 
-const INFO_NAME_PLAYER = "Player";
 const INFO_NAME_PLAYTIME = "PlayTime";
 const INFO_NAME_REVERSETIME = "Reverse";
 const INFO_NAME_MODE = "CurrentMode";
 const INFO_NAME_HIGHSCORE = "HighScore";
 
-const INFO_VAL_PLAYTIME_END = " ms";
+const INFO_VAL_PLAYTIME_END = " sec";
 const INFO_VAL_REVERSETIME_END = " Times";
 const INFO_VAL_HIGHSCORE_END = " Times";
 
