@@ -34,6 +34,7 @@ class GameScene extends Phaser.Scene {
         this.load.image(IMG_REV_DIAG, DIR_IMG + "/" + FNAME_IMG_REV_DIAG);
         this.load.image(IMG_PZL_UNIT_OFF, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_OFF);
         this.load.image(IMG_PZL_UNIT_ON, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_ON);
+        this.load.image(IMG_BUTTON_RESTART, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_RESTART);
 
 
         // 各スプライトシートの読み込み
@@ -172,6 +173,28 @@ class GameScene extends Phaser.Scene {
             this.puzzleArea.changeRevMode();
         }, this);
 
+        // リスタートボタンの表示
+        let resttBtnX = pzlXOffset +
+            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
+                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
+            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
+        let resttBtnY = chgRevBtnY + (
+            PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] +
+            PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]
+        );
+
+        this.puzzleArea.restartButton =
+            this.add.sprite(
+                resttBtnX,
+                resttBtnY,
+                IMG_BUTTON_RESTART
+            ).setInteractive();
+        this.puzzleArea.restartButton.on('pointerdown', function (pointer) {
+            // パズルの初期化を行い、再描画を行う
+            this.puzzleArea.restartPuzzle();
+            this.updatePuzzleState(true);
+        }, this);
+
         /* 画面の初期表示 END */
 
     }
@@ -188,7 +211,7 @@ class GameScene extends Phaser.Scene {
                     this.InfoArea.startTimer();
                 }
                 // パズルの再描画を行う
-                this.updatePuzzleState();
+                this.updatePuzzleState(false);
                 this.updatePuzzleFlg = false;
             }
             if (this.startFlg) {
@@ -203,7 +226,7 @@ class GameScene extends Phaser.Scene {
 
     }
 
-    updatePuzzleState() {
+    updatePuzzleState(_restart) {
         for (let i = 0; i < this.puzzleArea.puzzleSize[IDX_ROW]; i++) {
             for (let j = 0; j < this.puzzleArea.puzzleSize[IDX_COL]; j++) {
                 this.puzzleArea.puzzleUnitSprite[i][j].setTexture(
@@ -212,9 +235,18 @@ class GameScene extends Phaser.Scene {
             }
         }
 
-        this.revTimes++;
-        this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);
-        this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
+        if (_restart) {
+            this.InfoArea.resetTimer();
+            this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, 0);
+            this.InfoArea.setValueOf(INFO_NAME_PLAYTIME, "0.0");
+            this.startFlg = false;
+            this.revTimes = 0;
+            this.completePuzzleFlg = false;
+        } else {
+            this.revTimes++;
+            this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);
+            this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
+        }
 
     }
 

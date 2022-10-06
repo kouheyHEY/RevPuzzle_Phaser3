@@ -8,6 +8,7 @@ class PuzzleArea {
         this.puzzleUnitSprite = [];
 
         this.revChangeModeButton = null;
+        this.restartButton = null;
     }
 
     /**

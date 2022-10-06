@@ -8,12 +8,14 @@ const FNAME_IMG_REV_CROSS = "PuzzleUnit_Cross.png";
 const FNAME_IMG_REV_DIAG = "PuzzleUnit_Diagonal.png";
 const FNAME_IMG_PZL_UNIT_OFF = "PuzzleUnit_Off.png";
 const FNAME_IMG_PZL_UNIT_ON = "PuzzleUnit_On.png";
+const FNAME_IMG_PZL_UNIT_RESTART = "PuzzleUnit_Restart.png";
 
 const IMG_REV_ALL = "PuzzleUnitAll";
 const IMG_REV_CROSS = "PuzzleUnitCross";
 const IMG_REV_DIAG = "PuzzleUnitDiganal";
 const IMG_PZL_UNIT_OFF = "PuzzleUnitOff";
 const IMG_PZL_UNIT_ON = "PuzzleUnitOn";
+const IMG_BUTTON_RESTART = "PuzzleUnitRestart";
 
 const PUZZLE_TEXTURE = [
     IMG_PZL_UNIT_OFF,

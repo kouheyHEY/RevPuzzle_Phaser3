@@ -54,4 +54,8 @@ class InfoArea {
     dispHighScore() {
 
     }
+
+    resetTimer() {
+        this.startTime = 0;
+    }
 }
