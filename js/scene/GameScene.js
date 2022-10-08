@@ -94,7 +94,7 @@ class GameScene extends Phaser.Scene {
                 AREA_H_MODECHOICEAREA - STROKE_WEIGHT);
 
         // パズルエリア
-        g.fillStyle(COLOR_AREA_PUZZLE, 1)
+        g.fillStyle(COLOR_AREA_NORMAL, 1)
             .fillRect(
                 AREA_X_PUZZLEAREA,
                 AREA_Y_PUZZLEAREA,
@@ -251,11 +251,5 @@ class GameScene extends Phaser.Scene {
             this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
         }
 
-    }
-
-    updateRevModeState(_revMode) {
-        for (let i = 0; i < REV_MODE_NUM; i++) {
-            this.puzzleArea.revChangeModeButton[i].setTexture();
-        }
     }
 };

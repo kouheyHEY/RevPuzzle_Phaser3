@@ -117,6 +117,7 @@ class PuzzleArea {
 
     /** パズルエリアを初期化する */
     createPuzzle() {
+        // パズルボタンなどの初期化
         this.puzzleUnit = [];
         this.puzzleDefault = [];
         if (this.puzzleUnitSprite != []) {
@@ -127,7 +128,9 @@ class PuzzleArea {
             }
         }
 
+        // リスタートボタンの削除
         this.restartButton.destroy();
+        // 反転方法変更ボタンの削除
         this.revChangeModeButton.destroy();
     }
 }
