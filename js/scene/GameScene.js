@@ -242,6 +242,9 @@ class GameScene extends Phaser.Scene {
             this.startFlg = false;
             this.revTimes = 0;
             this.completePuzzleFlg = false;
+
+            // パズルの初期化（デバッグ）
+            this.puzzleArea.createPuzzle();
         } else {
             this.revTimes++;
             this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);

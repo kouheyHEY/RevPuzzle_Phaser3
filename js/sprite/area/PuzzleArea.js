@@ -114,4 +114,20 @@ class PuzzleArea {
         this.reverseMode = (this.reverseMode + 1) % REV_MODE_NUM;
         this.revChangeModeButton.setTexture(REV_BUTTON_TEXTURE[this.reverseMode]);
     }
+
+    /** パズルエリアを初期化する */
+    createPuzzle() {
+        this.puzzleUnit = [];
+        this.puzzleDefault = [];
+        if (this.puzzleUnitSprite != []) {
+            for (var i = 0; i < PUZZLE_SIZE[this.puzzleMode][IDX_ROW]; i++) {
+                for (var j = 0; j < PUZZLE_SIZE[this.puzzleMode][IDX_COL]; j++) {
+                    this.puzzleUnitSprite[i][j].destroy();
+                }
+            }
+        }
+
+        this.restartButton.destroy();
+        this.revChangeModeButton.destroy();
+    }
 }
