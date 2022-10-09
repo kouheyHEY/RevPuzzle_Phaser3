@@ -112,6 +112,10 @@ const INFO_VAL_HIGHSCORE_END = " Times";
 
 const INFO_COLOR = 0x002200;
 
+// モード選択ボタンの座標, 幅, 高さ
+const MODE_BUTTON_SIZE = [168, 48];
+const MODE_BUTTON_MARGIN = [28, 20];
+
 // パズルエリアの座標, 幅, 高さ
 const PUZZLE_OUTER_MARGIN = [
     [88, 81],

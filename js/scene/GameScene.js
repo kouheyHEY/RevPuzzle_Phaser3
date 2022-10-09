@@ -35,6 +35,12 @@ class GameScene extends Phaser.Scene {
         this.load.image(IMG_PZL_UNIT_OFF, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_OFF);
         this.load.image(IMG_PZL_UNIT_ON, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_ON);
         this.load.image(IMG_BUTTON_RESTART, DIR_IMG + "/" + FNAME_IMG_PZL_UNIT_RESTART);
+        this.load.image(IMG_MODE_NORMAL_OFF, DIR_IMG + "/" + FNAME_IMG_MODE_NORMAL);
+        this.load.image(IMG_MODE_NORMAL_ON, DIR_IMG + "/" + FNAME_IMG_MODE_NORMAL_ON);
+        this.load.image(IMG_MODE_HARD_OFF, DIR_IMG + "/" + FNAME_IMG_MODE_HARD);
+        this.load.image(IMG_MODE_HARD_ON, DIR_IMG + "/" + FNAME_IMG_MODE_HARD_ON);
+        this.load.image(IMG_MODE_EXTRA_OFF, DIR_IMG + "/" + FNAME_IMG_MODE_EXTRA);
+        this.load.image(IMG_MODE_EXTRA_ON, DIR_IMG + "/" + FNAME_IMG_MODE_EXTRA_ON);
 
 
         // 各スプライトシートの読み込み
@@ -106,94 +112,10 @@ class GameScene extends Phaser.Scene {
                 AREA_W_PUZZLEAREA - STROKE_WEIGHT,
                 AREA_H_PUZZLEAREA - STROKE_WEIGHT);
 
-        // デバッグ用（ゲーム中に値が変わるので仮置き中）
-        let info_val_playTime = "0.0" + INFO_VAL_PLAYTIME_END;
-        let info_val_reverse = 0 + INFO_VAL_REVERSETIME_END;
-        let info_val_mode = MODE_NAME[this.gameMode];
-        let info_val_highScore = "XXX" + INFO_VAL_HIGHSCORE_END;
-
-        // 情報表示エリアの各文字列
-        this.setText(INFO_NAME_PLAYTIME, INFO_X, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
-        this.setText(INFO_NAME_REVERSETIME, INFO_X, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
-        this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
-        this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
-
-        this.InfoArea.textObject[INFO_NAME_PLAYTIME] =
-            this.setText(info_val_playTime, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
-        this.InfoArea.textObject[INFO_NAME_REVERSETIME] =
-            this.setText(info_val_reverse, INFO_X + INFO_W + INFO_SPAN, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
-        this.InfoArea.textObject[INFO_NAME_MODE] =
-            this.setText(info_val_mode, INFO_X + INFO_W + INFO_SPAN, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
-        this.InfoArea.textObject[INFO_NAME_HIGHSCORE] =
-            this.setText(info_val_highScore, INFO_X + INFO_W + INFO_SPAN, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
-
-        // パズルエリア
-        // 3*3（難易度に応じて変更する）のパズルユニットのリストを作成する
-        var pzlXOffset = AREA_X_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_X];
-        var pzlYOffset = AREA_Y_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_Y];
-        for (var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++) {
-
-            this.puzzleArea.puzzleUnitSprite.push([]);
-
-            for (var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++) {
-
-                this.puzzleArea.puzzleUnitSprite[i][j] = this.add.sprite(
-                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2,
-                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2,
-                    IMG_PZL_UNIT_OFF
-                ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setDepth(1).setInteractive();
-
-                this.puzzleArea.puzzleUnitSprite[i][j].on('pointerdown', function (pointer) {
-
-                    let row = Math.floor((pointer.y - pzlYOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]));
-                    let col = Math.floor((pointer.x - pzlXOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]));
-
-                    this.puzzleArea.reversePuzzleUnit(row, col, true);
-
-                    this.updatePuzzleFlg = true;
-                }, this);
-            }
-        }
-
-        // 反転方法変更ボタンの表示
-        let chgRevBtnX = pzlXOffset +
-            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
-                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
-            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
-        let chgRevBtnY = pzlYOffset + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2;
-
-        this.puzzleArea.revChangeModeButton =
-            this.add.sprite(
-                chgRevBtnX,
-                chgRevBtnY,
-                REV_BUTTON_TEXTURE[REV_MODE_CROSS]
-            ).setInteractive();
-        this.puzzleArea.revChangeModeButton.on('pointerdown', function (pointer) {
-
-            this.puzzleArea.changeRevMode();
-        }, this);
-
-        // リスタートボタンの表示
-        let resttBtnX = pzlXOffset +
-            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
-                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
-            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
-        let resttBtnY = chgRevBtnY + (
-            PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] +
-            PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]
-        );
-
-        this.puzzleArea.restartButton =
-            this.add.sprite(
-                resttBtnX,
-                resttBtnY,
-                IMG_BUTTON_RESTART
-            ).setInteractive();
-        this.puzzleArea.restartButton.on('pointerdown', function (pointer) {
-            // パズルの初期化を行い、再描画を行う
-            this.puzzleArea.restartPuzzle();
-            this.updatePuzzleState(true);
-        }, this);
+        // 各エリアの描画
+        this.createInfoArea();
+        this.createModeChoiceArea();
+        this.createPuzzleArea();
 
         /* 画面の初期表示 END */
 
@@ -235,6 +157,7 @@ class GameScene extends Phaser.Scene {
             }
         }
 
+        // パズル初期化時の挙動
         if (_restart) {
             this.InfoArea.resetTimer();
             this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, 0);
@@ -243,13 +166,144 @@ class GameScene extends Phaser.Scene {
             this.revTimes = 0;
             this.completePuzzleFlg = false;
 
-            // パズルの初期化（デバッグ）
-            this.puzzleArea.createPuzzle();
         } else {
             this.revTimes++;
             this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);
             this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
         }
+    }
 
+    /**
+     * 情報表示エリアの描画を行う
+     */
+    createInfoArea() {
+        // 表示する項目
+        let info_val_playTime = "0.0" + INFO_VAL_PLAYTIME_END;
+        let info_val_reverse = 0 + INFO_VAL_REVERSETIME_END;
+        let info_val_mode = MODE_NAME[this.gameMode];
+        let info_val_highScore = "XXX" + INFO_VAL_HIGHSCORE_END;
+
+        // 情報表示エリアの各文字列
+        this.setText(INFO_NAME_PLAYTIME, INFO_X, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_REVERSETIME, INFO_X, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
+        this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
+
+        this.InfoArea.textObject[INFO_NAME_PLAYTIME] =
+            this.setText(info_val_playTime, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
+        this.InfoArea.textObject[INFO_NAME_REVERSETIME] =
+            this.setText(info_val_reverse, INFO_X + INFO_W + INFO_SPAN, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
+        this.InfoArea.textObject[INFO_NAME_MODE] =
+            this.setText(info_val_mode, INFO_X + INFO_W + INFO_SPAN, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
+        this.InfoArea.textObject[INFO_NAME_HIGHSCORE] =
+            this.setText(info_val_highScore, INFO_X + INFO_W + INFO_SPAN, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
+
+    }
+
+    /**
+     * モード選択エリアの描画
+     */
+    createModeChoiceArea() {
+        var btnXOffset = AREA_X_MODECHOICEAREA + STROKE_WEIGHT + MODE_BUTTON_MARGIN[IDX_X];
+        var btnYOffset = AREA_Y_MODECHOICEAREA + STROKE_WEIGHT + MODE_BUTTON_MARGIN[IDX_Y];
+
+        for (let i = 0; i < MODE_NAME.length; i++) {
+            this.modeChoiceArea.modeButtonList.push(this.add.sprite(
+                btnXOffset + MODE_BUTTON_SIZE[IDX_X] / 2,
+                btnYOffset + i * (MODE_BUTTON_SIZE[IDX_Y] + MODE_BUTTON_MARGIN[IDX_Y]) + MODE_BUTTON_SIZE[IDX_Y] / 2,
+                MODE_BUTTON_OFF_TEXTURE[i]
+            ).setInteractive());
+
+            // モード選択ボタン押下時の挙動
+            this.modeChoiceArea.modeButtonList[i].on('pointerdown', function (pointer) {
+
+                // モードを判別し、現在のモードを変更する
+                let mode = Math.floor((pointer.y - btnYOffset) / (MODE_BUTTON_SIZE[IDX_Y] + MODE_BUTTON_MARGIN[IDX_Y]));
+                this.gameMode = mode;
+
+                // パズルエリアの再描画と各情報の初期化
+                this.puzzleArea.createPuzzle(mode);
+                this.createPuzzleArea();
+                this.updatePuzzleState(true);
+
+                this.InfoArea.setValueOf(INFO_NAME_MODE, MODE_NAME[mode]);
+
+                console.log(mode);
+            }, this);
+        }
+    }
+
+    /**
+     * パズルエリアの描画を行う
+     */
+    createPuzzleArea() {
+        // パズルユニットのリストを作成する
+        var pzlXOffset = AREA_X_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_X];
+        var pzlYOffset = AREA_Y_PUZZLEAREA + STROKE_WEIGHT + PUZZLE_OUTER_MARGIN[this.gameMode][IDX_Y];
+        for (var i = 0; i < PUZZLE_SIZE[this.gameMode][IDX_ROW]; i++) {
+
+            this.puzzleArea.puzzleUnitSprite.push([]);
+
+            for (var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++) {
+
+                this.puzzleArea.puzzleUnitSprite[i][j] = this.add.sprite(
+                    pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2,
+                    pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2,
+                    IMG_PZL_UNIT_OFF
+                ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setDepth(1).setInteractive();
+
+                this.puzzleArea.puzzleUnitSprite[i][j].on('pointerdown', function (pointer) {
+
+                    let row = Math.floor((pointer.y - pzlYOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]));
+                    let col = Math.floor((pointer.x - pzlXOffset) / (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]));
+
+                    this.puzzleArea.reversePuzzleUnit(row, col, true);
+
+                    this.updatePuzzleFlg = true;
+                }, this);
+            }
+        }
+
+        // 反転方法変更ボタンの表示
+        let chgRevBtnX = pzlXOffset +
+            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
+                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
+            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
+        let chgRevBtnY = pzlYOffset + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2;
+
+        this.puzzleArea.revChangeModeButton =
+            this.add.sprite(
+                chgRevBtnX,
+                chgRevBtnY,
+                REV_BUTTON_TEXTURE[REV_MODE_CROSS]
+            ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setInteractive();
+
+        this.puzzleArea.revChangeModeButton.on('pointerdown', function (pointer) {
+
+            this.puzzleArea.changeRevMode();
+        }, this);
+
+        // リスタートボタンの表示
+        let resttBtnX = pzlXOffset +
+            PUZZLE_SIZE[this.gameMode][IDX_COL] * (
+                PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]
+            ) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2 + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X];
+        let resttBtnY = chgRevBtnY + (
+            PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] +
+            PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]
+        );
+
+        this.puzzleArea.restartButton =
+            this.add.sprite(
+                resttBtnX,
+                resttBtnY,
+                IMG_BUTTON_RESTART
+            ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setInteractive();
+
+        this.puzzleArea.restartButton.on('pointerdown', function (pointer) {
+            // パズルの初期化を行い、再描画を行う
+            this.puzzleArea.restartPuzzle();
+            this.updatePuzzleState(true);
+        }, this);
     }
 };

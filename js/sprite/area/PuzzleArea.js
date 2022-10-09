@@ -115,8 +115,10 @@ class PuzzleArea {
         this.revChangeModeButton.setTexture(REV_BUTTON_TEXTURE[this.reverseMode]);
     }
 
-    /** パズルエリアを初期化する */
-    createPuzzle() {
+    /** パズルエリアを初期化する
+     * @param {int} _mode 変更後のモード
+     */
+    createPuzzle(_mode) {
         // パズルボタンなどの初期化
         this.puzzleUnit = [];
         this.puzzleDefault = [];
@@ -128,9 +130,15 @@ class PuzzleArea {
             }
         }
 
+        this.puzzleMode = _mode;
+        this.puzzleSize = PUZZLE_SIZE[_mode];
+
         // リスタートボタンの削除
         this.restartButton.destroy();
         // 反転方法変更ボタンの削除
         this.revChangeModeButton.destroy();
+
+        // パズルの再生成
+        this.initPuzzle();
     }
 }
