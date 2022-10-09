@@ -118,7 +118,6 @@ class GameScene extends Phaser.Scene {
         this.createPuzzleArea();
 
         /* 画面の初期表示 END */
-
     }
 
     update() {
@@ -163,13 +162,19 @@ class GameScene extends Phaser.Scene {
             this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, 0);
             this.InfoArea.setValueOf(INFO_NAME_PLAYTIME, "0.0");
             this.startFlg = false;
-            this.revTimes = 0;
+            this.InfoArea.revTimes = 0;
             this.completePuzzleFlg = false;
 
         } else {
-            this.revTimes++;
-            this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.revTimes);
+            this.InfoArea.revTimes++;
+            this.InfoArea.setValueOf(INFO_NAME_REVERSETIME, this.InfoArea.revTimes);
             this.completePuzzleFlg = this.puzzleArea.checkPuzzleAnswer();
+
+            // パズルがそろった場合
+            if (this.completePuzzleFlg) {
+                //　ハイスコアの更新を行う
+                this.InfoArea.updateHighScore(this.gameMode);
+            }
         }
     }
 
@@ -181,7 +186,7 @@ class GameScene extends Phaser.Scene {
         let info_val_playTime = "0.0" + INFO_VAL_PLAYTIME_END;
         let info_val_reverse = 0 + INFO_VAL_REVERSETIME_END;
         let info_val_mode = MODE_NAME[this.gameMode];
-        let info_val_highScore = "XXX" + INFO_VAL_HIGHSCORE_END;
+        let info_val_highScore = 0 + INFO_VAL_HIGHSCORE_MID + "0.0" + INFO_VAL_HIGHSCORE_END;
 
         // 情報表示エリアの各文字列
         this.setText(INFO_NAME_PLAYTIME, INFO_X, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
@@ -189,14 +194,15 @@ class GameScene extends Phaser.Scene {
         this.setText(INFO_NAME_MODE, INFO_X, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
         this.setText(INFO_NAME_HIGHSCORE, INFO_X, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
 
+        let infoValX = INFO_X + INFO_W;
         this.InfoArea.textObject[INFO_NAME_PLAYTIME] =
-            this.setText(info_val_playTime, INFO_X + INFO_W + INFO_SPAN, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
+            this.setText(info_val_playTime, infoValX, INFO_Y_PLAYTIME, INFO_H, INFO_COLOR, true);
         this.InfoArea.textObject[INFO_NAME_REVERSETIME] =
-            this.setText(info_val_reverse, INFO_X + INFO_W + INFO_SPAN, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
+            this.setText(info_val_reverse, infoValX, INFO_Y_REVERSE, INFO_H, INFO_COLOR, true);
         this.InfoArea.textObject[INFO_NAME_MODE] =
-            this.setText(info_val_mode, INFO_X + INFO_W + INFO_SPAN, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
+            this.setText(info_val_mode, infoValX, INFO_Y_MODE, INFO_H, INFO_COLOR, true);
         this.InfoArea.textObject[INFO_NAME_HIGHSCORE] =
-            this.setText(info_val_highScore, INFO_X + INFO_W + INFO_SPAN, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
+            this.setText(info_val_highScore, infoValX, INFO_Y_HIGHSCORE, INFO_H, INFO_COLOR, true);
 
     }
 
@@ -228,9 +234,17 @@ class GameScene extends Phaser.Scene {
 
                 this.InfoArea.setValueOf(INFO_NAME_MODE, MODE_NAME[mode]);
 
+                // ハイスコアの表示を更新する
+                this.InfoArea.dispHighscore(this.gameMode);
+
+                // 難易度選択ボタンを押下表示にする
+                this.modeChoiceArea.pushChgButton(mode);
+
                 console.log(mode);
             }, this);
         }
+
+        this.modeChoiceArea.pushChgButton(this.gameMode);
     }
 
     /**

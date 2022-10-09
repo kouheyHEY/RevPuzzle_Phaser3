@@ -22,6 +22,14 @@ class InfoArea {
         this.endTime = 0;
         // 経過時間
         this.gameTime = 0;
+        // 反転回数
+        this.revTimes = 0;
+        // ハイスコア
+        this.highScore = [
+            [0, 0],
+            [0, 0],
+            [0, 0]
+        ];
     }
 
     dispColumnAll() {
@@ -29,16 +37,16 @@ class InfoArea {
     }
 
     setValueOf(_column, _value) {
-        this.textObject[_column].setText(_value + this.END_STR[_column]);
+        if (_column == INFO_NAME_HIGHSCORE) {
+            this.textObject[_column].setText(_value[HIGHSCORE_REVNUM] + INFO_VAL_HIGHSCORE_MID + _val[HIGHSCORE_TIME]);
+        } else {
+            this.textObject[_column].setText(_value + this.END_STR[_column]);
+        }
     }
 
     startTimer() {
         let startDate = new Date();
         this.startTime = startDate.getTime();
-    }
-
-    finishTimer() {
-
     }
 
     stopTimer() {
@@ -51,11 +59,37 @@ class InfoArea {
         this.textObject[INFO_NAME_PLAYTIME].setText(this.gameTime + this.END_STR[INFO_NAME_PLAYTIME]);
     }
 
-    dispHighScore() {
-
-    }
-
     resetTimer() {
         this.startTime = 0;
+    }
+
+    dispHighscore(_mode) {
+        this.textObject[INFO_NAME_HIGHSCORE].setText(
+            this.highScore[_mode][HIGHSCORE_REVNUM] + INFO_VAL_HIGHSCORE_MID +
+            this.highScore[_mode][HIGHSCORE_TIME] + INFO_VAL_HIGHSCORE_END
+        );
+    }
+
+    updateHighScore(_mode) {
+        // 反転回数を更新した場合
+        if (this.highScore[_mode][HIGHSCORE_REVNUM] == 0
+            || this.highScore[_mode][HIGHSCORE_REVNUM] > this.revTimes
+        ) {
+            // 各値を更新する
+            this.highScore[_mode][HIGHSCORE_TIME] = this.gameTime;
+            this.highScore[_mode][HIGHSCORE_REVNUM] = this.revTimes;
+
+            // 反転回数がハイスコアと同じ場合
+        } else if (this.highScore[_mode][HIGHSCORE_REVNUM] == this.revTimes) {
+            // パズル時間によって更新するかを決定する
+            if (this.highScore[_mode][HIGHSCORE_TIME] > this.gameTime) {
+                // 各値を更新する
+                this.highScore[_mode][HIGHSCORE_TIME] = this.gameTime;
+                this.highScore[_mode][HIGHSCORE_REVNUM] = this.revTimes;
+            }
+        }
+
+        // ハイスコアの表示を更新する
+        this.dispHighscore(_mode);
     }
 }
