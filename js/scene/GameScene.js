@@ -240,7 +240,6 @@ class GameScene extends Phaser.Scene {
                 // 難易度選択ボタンを押下表示にする
                 this.modeChoiceArea.pushChgButton(mode);
 
-                console.log(mode);
             }, this);
         }
 
@@ -260,10 +259,18 @@ class GameScene extends Phaser.Scene {
 
             for (var j = 0; j < PUZZLE_SIZE[this.gameMode][IDX_COL]; j++) {
 
+                // パズルの初期状態によって生成する際の裏表の状態を決定する
+                let addTexture = null;
+                if (this.puzzleArea.puzzleDefault[i][j] == PUZZLE_STATE_0) {
+                    addTexture = IMG_PZL_UNIT_OFF
+                } else {
+                    addTexture = IMG_PZL_UNIT_ON;
+                }
+
                 this.puzzleArea.puzzleUnitSprite[i][j] = this.add.sprite(
                     pzlXOffset + j * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_X]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_X] / 2,
                     pzlYOffset + i * (PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] + PUZZLE_INNER_MARGIN[this.gameMode][IDX_Y]) + PUZZLE_UNIT_SIZE[this.gameMode][IDX_Y] / 2,
-                    IMG_PZL_UNIT_OFF
+                    addTexture
                 ).setScale(PUZZLE_BUTTON_SCALE[this.gameMode]).setDepth(1).setInteractive();
 
                 this.puzzleArea.puzzleUnitSprite[i][j].on('pointerdown', function (pointer) {

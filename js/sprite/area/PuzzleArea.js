@@ -51,10 +51,27 @@ class PuzzleArea {
         // 初期配列を生成する
         let rndList = [];
         for (let i = 0; i < PUZZLE_RAND_NUM[this.puzzleMode]; i++) {
-            let rndN = (Math.random() * PUZZLE_UNIT_NUM[this.puzzleMode]);
+            let rndN = 0;
             // ランダムな数字を指定の数だけ生成する
-        }
+            let duplicate = true;
+            while (duplicate) {
+                rndN = Math.floor((Math.random() * PUZZLE_UNIT_NUM[this.puzzleMode]));
+                duplicate = false;
+                for (let j = 0; j < rndList.length; j++) {
+                    if (rndList[j] == rndN) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+            }
+            rndList.push(rndN);
 
+            this.puzzleDefault
+            [Math.floor(rndN / PUZZLE_SIZE[this.puzzleMode][IDX_COL])]
+            [Math.floor(rndN % PUZZLE_SIZE[this.puzzleMode][IDX_COL])]
+                = PUZZLE_STATE_1;
+            this.restartPuzzle();
+        }
     }
 
     /**
@@ -80,7 +97,7 @@ class PuzzleArea {
      * @param {Boolean} _revArround 周囲を反転させるか
      */
     reversePuzzleUnit(_row, _col, _revArround) {
-        console.log(_row + ", " + _col);
+
         // 指定のパズルを反転させる
         this.puzzleUnit[_row][_col] = (this.puzzleUnit[_row][_col] + 1) % 2;
 
