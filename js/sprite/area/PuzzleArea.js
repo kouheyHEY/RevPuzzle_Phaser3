@@ -48,6 +48,13 @@ class PuzzleArea {
             }
         }
 
+        // 初期配列を生成する
+        let rndList = [];
+        for (let i = 0; i < PUZZLE_RAND_NUM[this.puzzleMode]; i++) {
+            let rndN = (Math.random() * PUZZLE_UNIT_NUM[this.puzzleMode]);
+            // ランダムな数字を指定の数だけ生成する
+        }
+
     }
 
     /**

@@ -27,6 +27,11 @@ const PUZZLE_SIZE = [
     [4, 4]
 ];
 
+// パズルのユニット数
+const PUZZLE_UNIT_NUM = [
+    9, 12, 16
+];
+
 // パズルの状態数を表す定数
 const PUZZLE_STATE_NUM = 2
 
@@ -144,4 +149,9 @@ const PUZZLE_BUTTON_SCALE = [
 
 const HIGHSCORE_REVNUM = 0;
 const HIGHSCORE_TIME = 1;
+
+const PUZZLE_RAND_NUM = [
+    3, 4, 5
+];
+
 /* ゲームシーン変数 END */
